@@ -55,7 +55,7 @@ def check_if_process_is_ransomware(pid):
 def main():
     counter = 0
     while True:
-        if counter < 3:
+        if counter <= 10:
             suspect_processes_pids = find_most_intensive_processes_pids()
             counter += 1
             for tuples in suspect_processes_pids:
