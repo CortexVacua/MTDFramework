@@ -18,7 +18,7 @@
           "Priority": 1,
           "ScriptName": "RemoveRootkit.py",
           "AbsolutePath": "/opt/MTDFramework/Rootkit/",
-          "RunWithPrefix": "python3"
+          "RunWithPrefix": "LD_PRELOAD=/lib/arm-linux-gnueabihf/libc.so.6 python3"
         }
       ]
     },
