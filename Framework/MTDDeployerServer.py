@@ -44,6 +44,7 @@ def main():
         client_socket, address = s.accept()
         log.info('Recieved attack report from ' + address[0])
         if address[0] == client_socket.getsockname()[0] or external_allowed or address[0] in white_list:
+            log.info('Attack report is being processed.')
             attack_type = client_socket.recv(1024).decode('utf-8')
             log.info('Attack type: ' + attack_type)
             json_data_attack_types = data[ATTACK_TYPES]
@@ -55,9 +56,11 @@ def main():
                         os.system(mtd_solutions[0][4] + ' ' + str(mtd_solutions[0][1]) + ' ' + str(mtd_solutions[0][3]))
                     else:
                         os.system(mtd_solutions[0][4] + ' ' + str(mtd_solutions[0][1]))
+                    log.info('MTD Solution ' + str(mtd_solutions[0][1]) + ' has been deployed.')
                 except Exception:
                     log.error(Exception)
-
+        else:
+            log.info('Attack report ignored.')
         client_socket.close()
 
 
