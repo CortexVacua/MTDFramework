@@ -28,6 +28,7 @@ def unlink_fake_etc_ld_so_preload():
 def main():
     if check_if_ld_so_preload_was_unhooked_by_malware():
         unlink_fake_etc_ld_so_preload()
+        replace_with_known_good_preload_file()
     else:
         replace_with_known_good_preload_file()
 
@@ -55,4 +56,4 @@ def check_if_ld_so_preload_was_unhooked_by_malware():
 
 
 if __name__ == '__main__':
-    unlink_fake_etc_ld_so_preload()
+    main()
