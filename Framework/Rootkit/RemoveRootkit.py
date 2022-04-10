@@ -7,7 +7,13 @@ LD_SO_PRELOAD = 'backupLSP'
 LD_SO = '/lib/arm-linux-gnueabihf/ld-2.24.so'
 LD_SO_NEW = '/lib/arm-linux-gnueabihf/ld-2.24.so.new'
 LD_SO_OLD = '/lib/arm-linux-gnueabihf/ld-2.24.so.old'
-RUBBISH = '/etc/preload.so.ld'
+
+def main():
+    if check_if_ld_so_preload_was_unhooked_by_malware():
+        unlink_fake_etc_ld_so_preload()
+        replace_with_known_good_preload_file()
+    else:
+        replace_with_known_good_preload_file()
 
 
 def unlink_fake_etc_ld_so_preload():
@@ -23,13 +29,7 @@ def unlink_fake_etc_ld_so_preload():
                 elem_to_remove = splitted_line[4]
             elif 'prelink checking: %s' in line:
                 flag = True
-    os.system("sed -i 's|"+elem_to_remove+"|"+RUBBISH+"|g' "+LD_SO)
-
-def main():
-    if check_if_ld_so_preload_was_unhooked_by_malware():
-        unlink_fake_etc_ld_so_preload()
-    else:
-        replace_with_known_good_preload_file()
+    os.system("sed -i 's|"+elem_to_remove+"|"+ETC_LD_SO_PRELOAD+"|g' "+LD_SO)
 
 
 def check_if_ld_so_preload_visible():
@@ -55,4 +55,4 @@ def check_if_ld_so_preload_was_unhooked_by_malware():
 
 
 if __name__ == '__main__':
-    unlink_fake_etc_ld_so_preload()
+    main()
